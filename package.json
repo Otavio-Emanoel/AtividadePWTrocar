@@ -1,0 +1,21 @@
+{
+  "name": "kanban---otavio-e-samuel",
+  "version": "1.0.0",
+  "description": "Atividade de PW do Otavio e Samuel",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "PW",
+    "Atividade"
+  ],
+  "author": "Otavio, Samuel",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "nodemon": "^3.1.9",
+    "path": "^0.12.7"
+  }
+}
