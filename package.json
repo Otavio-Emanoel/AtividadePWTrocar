@@ -13,6 +13,7 @@
   "author": "Otavio, Samuel",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.20.3",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
     "nodemon": "^3.1.9",

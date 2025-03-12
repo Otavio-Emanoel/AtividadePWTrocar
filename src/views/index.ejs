@@ -11,22 +11,83 @@
     <main>
         <div class="main-content">
             <div id="a">
-            
+                <% mensagensA.forEach(mensagem => { %>
+                    <div class="mensagem" onclick="showOptions('<%= mensagem %>', 'A')"><%= mensagem %></div>
+                <% }) %>
             </div>
             <div id="b">
-    
+                <% mensagensB.forEach(mensagem => { %>
+                    <div class="mensagem" onclick="showOptions('<%= mensagem %>', 'B')"><%= mensagem %></div>
+                <% }) %>
             </div>
         </div>
-        <div class="main-change">
 
-            <form action="" method="get">
-                <input id="texto" name="texto" type="text" placeholder="Escreva uma mensagem">
+        <div class="main-change">
+            <form action="/addMessage" method="POST">
+                <input id="texto" name="texto" type="text" placeholder="Escreva uma mensagem" required>
                 <div>
-                    <button id="sendToA">Enviar para A</button>
-                    <button id="sendToB">Enviar para B</button>
+                    <button type="submit" name="destino" value="A">Enviar para A</button>
+                    <button type="submit" name="destino" value="B">Enviar para B</button>
                 </div>
             </form>
         </div>
     </main>
+
+    <div id="modal" style="display: none;">
+        <p id="modal-text"></p>
+        <button class="btn-mover" onclick="moveMessage()">Mover</button>
+        <div class="div-btn-delete-edit">
+            <button class="btn-edit" onclick="editMessage()">Editar</button>
+            <button class="btn-delete" onclick="deleteMessage()">Excluir</button>
+        </div>
+        <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+    </div>
+
+    <script>
+        let selectedMessage = "";
+        let selectedOrigin = "";
+
+        function showOptions(texto, origem) {
+            selectedMessage = texto;
+            selectedOrigin = origem;
+            document.getElementById("modal-text").innerText = texto;
+            document.getElementById("modal").style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById("modal").style.display = "none";
+        }
+
+        function moveMessage() {
+            const destino = selectedOrigin === "A" ? "B" : "A";
+            fetch('/moveMessage', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ texto: selectedMessage, origem: selectedOrigin, destino })
+            }).then(() => window.location.reload());
+        }
+
+        function editMessage() {
+            const newText = prompt("Digite o novo texto:", selectedMessage);
+            if (!newText) return;
+
+            fetch('/editMessage', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ oldText: selectedMessage, newText, origem: selectedOrigin })
+            }).then(() => window.location.reload());
+        }
+
+        function deleteMessage() {
+            if (!confirm("Tem certeza que deseja excluir?")) return;
+
+            fetch('/deleteMessage', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ texto: selectedMessage, origem: selectedOrigin })
+            }).then(() => window.location.reload());
+        }
+    </script>
+    
 </body>
 </html>
