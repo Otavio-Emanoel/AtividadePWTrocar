@@ -44,7 +44,7 @@ body {
                 & .mensagem {
                     position: relative;
                     width: 90%;
-                    height: 30px;
+                    min-height: 30px;
                     border: #00000067 1px solid;
                     border-radius: 2px;
                     padding: 10px 5px 0 5px;
@@ -95,7 +95,7 @@ body {
                 & .mensagem {
                     position: relative;
                     width: 90%;
-                    height: 30px;
+                    min-height: 30px;
                     border: #00000067 1px solid;
                     border-radius: 2px;
                     padding: 10px 5px 0 5px;
